@@ -22,8 +22,8 @@ def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)):
 
 
 @router.get("/{id}", response_model=schemas.UserResponse)
-def get_user(id: int, db: Session = Depends(get_db)) :
-    user = db.query(models.User).filter(models.Post.id == id).first()
+def get_user(id: int, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == id).first()
     if not user:
-        raise HTTPException (status_code=status.HTTP_404_NOT_FOUND, detail=f"post with id: {id} was not found")
+        raise HTTPException (status_code=status.HTTP_404_NOT_FOUND, detail=f"account with id: {id} was not found")
     return user 
