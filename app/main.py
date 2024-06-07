@@ -5,7 +5,7 @@ from .database import engine
 from .config import settings
 from fastapi.middleware.cors import CORSMiddleware
 
-origins = ["https://www.google.com"]
+origins = ["*"]
 
 app = FastAPI()
 

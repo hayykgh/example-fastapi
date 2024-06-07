@@ -3,7 +3,7 @@ from sqlalchemy.sql.expression import null
 from .database import Base
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
-from sqlalchemy.orm import relationship 
+from sqlalchemy.orm import relationship
 
 
 class Post(Base):
