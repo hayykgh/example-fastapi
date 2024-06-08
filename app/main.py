@@ -32,4 +32,4 @@ app.include_router(vote.router)
 # root path
 @app.get("/")
 def root():
-    return {"data": "welcome to my app"}
+    return {"արա էյ": "հինչ ղարկում են պացում ես"}
