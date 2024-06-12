@@ -1,0 +1,30 @@
+version: "3"
+services:
+  api:
+    image: ha1kgh/fastapi
+    depends_on:
+      - postgres
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/usr/src/app:ro
+    environment:
+      - DATABASE_HOSTNAME=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_PASSWORD=Samura1!
+      - DATABASE_NAME=FastAPI
+      - DATABASE_USERNAME=postgres
+      - SECRET_KEY=Df7CCiC2iqzSsfr62ugl2cmr9HapfSfTDUMQgl0mGEE
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=60
+
+  postgres:
+    image: postgres
+    environment: 
+      - POSTGRES_PASSWORD=Samura1!
+      - POSTGRES_DB=FastAPI
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+
+volumes:
+  postgres_db:

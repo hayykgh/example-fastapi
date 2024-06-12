@@ -32,4 +32,4 @@ app.include_router(vote.router)
 # root path
 @app.get("/")
 def root():
-    return {"message": "a regular message"}
+    return {"message": "a new message"}
