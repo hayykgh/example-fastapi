@@ -23,7 +23,8 @@ def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.
    results = results = db.query(models.Post, func.count(models.Vote.post_id).label("votes")) \
                .outerjoin(models.Vote, models.Vote.post_id == models.Post.id) \
                .group_by(models.Post.id) \
-               .filter(models.Post.title.contains(search)).limit(limit).offset(skip)
+               .filter(models.Post.title.contains(search)).order_by(models.Post.id)\
+               .limit(limit).offset(skip)
    return results
 
 

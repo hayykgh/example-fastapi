@@ -5,6 +5,7 @@ from app import models
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from app.config import settings
+from app.oauth2 import create_access_token
 from app.database import get_db
 
 
@@ -54,3 +55,31 @@ def test_user(client):
     new_user["password"]=user_data["password"]
 
     return new_user
+
+@pytest.fixture
+def token(test_user):
+    return create_access_token({"user_id": test_user["id"]})
+
+@pytest.fixture
+def authorized_client(client, token):
+    client.headers = {
+        **client.headers,
+        "Authorization": f"Bearer {token}"
+    }
+    return client
+
+
+
+@pytest.fixture
+def test_post(authorized_client, test_user):
+
+    posts = []
+    for i in range(4):
+        post_data = {
+            "title": f"Title {i}",
+            "content": f"Content number {i}",
+            "owner_id": test_user['id']
+        }
+        res = authorized_client.post("/posts", json=post_data)
+        posts.append(res.json())
+    return posts

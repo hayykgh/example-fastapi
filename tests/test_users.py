@@ -1,4 +1,5 @@
-from app import schemas   
+from app import schemas
+import pytest
 
 
 def test_root(client):
@@ -26,3 +27,19 @@ def test_login_user(client, test_user):
     assert login_res.token_type == "bearer"
     assert res.status_code == 200 
 
+
+@pytest.mark.parametrize(
+    "email, password, status_code",
+    [
+        ("ha1kgh@gmail.com", "WrongPassword", 403),
+        ("WrongEmail@gmail.com", "WrongPassword", 403),
+        ("ha1kgh@gmail.com", None, 422),
+        (None, "Samura1!", 422)
+    ]
+)
+def test_incorrect_login(client, email, password, status_code):
+    res = client.post(
+        "/login", data={"username": email, "password": password}
+    )
+    
+    assert res.status_code == status_code

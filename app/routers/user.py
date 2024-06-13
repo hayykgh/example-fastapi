@@ -8,7 +8,7 @@ router = APIRouter(
     tags=["Users"]   # Everything below will be grouped under the "Users" section in the swagger
 )
 
-
+##### CREATE LOGIC FOR ALREADY EXISTING ACCOUNT ERROR
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserResponse)
 def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)):
     hashed_password = utils.hash(user.password)
@@ -19,6 +19,9 @@ def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)):
     db.refresh(new_user)
 
     return new_user
+
+
+
 
 
 @router.get("/{id}", response_model=schemas.UserResponse)
