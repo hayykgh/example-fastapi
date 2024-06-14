@@ -7,14 +7,14 @@ jobs:
     environment:
       name: testing
     env: 
-      DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}
-      DATABASE_PORT: ${{secrets.DATABASE_PORT}}
-      DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
-      DATABASE_NAME: ${{secrets.DATABASE_NAME}}
-      DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
-      SECRET_KEY: ${{secrets.SECRET_KEY}}
-      ALGORITHM: ${{secrets.ALGORITHM}}
-      ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
+      DATABASE_HOSTNAME: ${{secrets.GITHUB_TOKEN}}
+      DATABASE_PORT: ${{secrets.GITHUB_TOKEN}}
+      DATABASE_PASSWORD: ${{secrets.GITHUB_TOKEN}}
+      DATABASE_NAME: ${{secrets.GITHUB_TOKEN}}
+      DATABASE_USERNAME: ${{secrets.GITHUB_TOKEN}}
+      SECRET_KEY: ${{secrets.GITHUB_TOKEN}}
+      ALGORITHM: ${{secrets.GITHUB_TOKEN}}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.GITHUB_TOKEN}}  
     runs-on: ubuntu-latest
     steps:
       - name: pulling git repo
@@ -28,7 +28,7 @@ jobs:
       - name: install all dependencies 
         run: pip install -r requirements.txt
       - name: test with Pytest
-        run:
+        run: |
           pip install pytest
           pytest
           
