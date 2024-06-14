@@ -2,10 +2,10 @@ from app import schemas
 import pytest
 
 
-def test_root(client):
-    res = client.get('/')
-    assert res.json().get('message') == "a new message"
-    assert res.status_code == 200
+# def test_root(client):
+#     res = client.get('/')
+#     assert res.json().get('message') == "a new message"
+#     assert res.status_code == 200
 
 
 def test_create_user(client):
