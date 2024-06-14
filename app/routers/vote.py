@@ -29,3 +29,4 @@ def vote(id: int, db: Session = Depends(database.get_db), current_user: int = De
         db.add(new_vote)
         db.commit()
         return {"message": "Successfully added the vote"}    
+
