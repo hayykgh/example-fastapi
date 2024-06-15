@@ -1,7 +1,8 @@
 version: "3"
 services:
   api:
-    build: .
+    
+    image: ha1kgh/fastapi
     depends_on:
       - postgres
     ports:

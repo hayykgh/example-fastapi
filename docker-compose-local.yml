@@ -1,7 +1,7 @@
 version: "3"
 services:
   api:
-    image: ha1kgh/fastapi
+    build: .
     depends_on:
       - postgres
     ports:
@@ -17,6 +17,7 @@ services:
       - SECRET_KEY=Df7CCiC2iqzSsfr62ugl2cmr9HapfSfTDUMQgl0mGEE
       - ALGORITHM=HS256
       - ACCESS_TOKEN_EXPIRE_MINUTES=60
+
 
   postgres:
     image: postgres
