@@ -1,7 +1,6 @@
 version: "3"
 services:
   api:
-    
     image: ha1kgh/fastapi
     depends_on:
       - postgres
