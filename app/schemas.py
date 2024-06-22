@@ -12,9 +12,11 @@ class PostBase(BaseModel):
 
 # Response model for user details.
 class UserResponse(BaseModel):
-    
-    email: EmailStr
     id: int
+    email: EmailStr
+    first_name: str
+    last_name: str
+    
     created_at: datetime
 
     class Config:
@@ -54,6 +56,8 @@ class PostOut(BaseModel):
 class CreateUser(BaseModel):
 
     email: EmailStr
+    first_name: str
+    last_name: str
     password: str
 
 # Model for JWT token.
@@ -66,3 +70,30 @@ class Token(BaseModel):
 class TokenData(BaseModel):
 
     id: int
+    first_name: str
+    last_name: str
+    user_email: str
+
+
+class UserUpdateResponse(BaseModel):
+    id: int
+    email: EmailStr
+    first_name: str
+    last_name: str
+    
+    created_at: datetime
+
+    access_token: str
+    class Config:
+        from_attributes = True
+
+class VoteResponse(BaseModel):
+    message: str
+    likes: int
+
+
+class UserUpdate(BaseModel):
+    email: Optional[EmailStr] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    password: Optional[str] = None

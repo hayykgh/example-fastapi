@@ -1,6 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from . import models
-from .routers import post, user, auth, vote
+from .routers import vote, post, user, auth
 from .database import engine
 from .config import settings
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,6 +16,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+@app.get("/some-protected-endpoint")
+async def some_protected_endpoint():
+    raise HTTPException(status_code=401, detail="Not authenticated")
+
 
 # FastAPI router for post.py file
 app.include_router(post.router)

@@ -28,7 +28,12 @@ def create_access_token(data: dict):
     # --- Calculates the token expiration time ---
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     # --- Inserts the token expiration time in the "to_encode" dictionary ---
-    to_encode.update({"exp": expire})
+    to_encode.update({
+        "exp": expire,
+        "first_name": data.get("first_name"),   # Ensure first_name is included
+        "last_name": data.get("last_name") ,    # Ensure last_name is included
+        "user_email": data.get("user_email") ,  # Ensure user_email is included
+    })
 
     # --- Encode the token using the provided data, secret key, and algorithm ---
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
@@ -46,13 +51,16 @@ def verify_access_token(token: str, credentials_exception):
         # --- Decode the JWT token using the secret key and algorithm ---
         payload = jwt.decode(token, SECRET_KEY, ALGORITHM)
         id: int = payload.get("user_id")
+        first_name: str = payload.get("first_name")
+        last_name: str = payload.get("last_name")
+        user_email: str = payload.get("user_email")
 
         # --- Check if the user_id is present in the payload; raise exception if not ---
         if id is None:
             raise credentials_exception
         
         # --- Create a TokenData object with the extracted user_id ---
-        token_data = schemas.TokenData(id=id)
+        token_data = schemas.TokenData(id=id, first_name=first_name, last_name=last_name, user_email=user_email)
 
     except JWTError:
         # --- Raise credentials_exception if decoding fails ---

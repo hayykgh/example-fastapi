@@ -8,7 +8,7 @@ router = APIRouter(
 )
 
 # Add / Remove vote
-@router.post("/{id}")
+@router.post("/{id}", response_model=schemas.VoteResponse)
 def vote(id: int, db: Session = Depends(database.get_db), current_user: int = Depends(oauth2.get_current_user)):
     """
     Args:
@@ -24,24 +24,28 @@ def vote(id: int, db: Session = Depends(database.get_db), current_user: int = De
     """
 
     # Query the post with the provided ID
-    post_query = db.query(models.Post).filter(id == models.Post.id)
-
-    # Check if the user has already voted on the post
-    found_vote = db.query(models.Vote).filter(current_user.id == models.Vote.user_id, id == models.Vote.post_id).first()
+    post = db.query(models.Post).filter(models.Post.id == id).first()
 
     # Raise HTTP 404 if the post doesn't exist
-    if post_query.first() == None:
+    if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id: {id} does not exist")
+
+    # Check if the user has already voted on the post
+    found_vote = db.query(models.Vote).filter(models.Vote.user_id == current_user.id, models.Vote.post_id == id).first()
 
     # If the user has already voted, delete the existing vote
     if found_vote:
         db.delete(found_vote)
         db.commit()
-        return {"message": "Successfully deleted the vote"}
-
-    # If the user hasn't voted yet, add a new vote
+        message = "Successfully deleted the vote"
     else:
+        # If the user hasn't voted yet, add a new vote
         new_vote = models.Vote(post_id=id, user_id=current_user.id)
         db.add(new_vote)
         db.commit()
-        return {"message": "Successfully added the vote"}
+        message = "Successfully added the vote"
+
+    # Count the total number of votes (likes) for the post
+    total_likes = db.query(models.Vote).filter(models.Vote.post_id == id).count()
+
+    return {"message": message, "likes": total_likes}

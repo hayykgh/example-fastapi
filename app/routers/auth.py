@@ -35,8 +35,9 @@ def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session =
         )
 
     # --- Generate a JWT token ---
-    # Create a JWT token that includes the user's id in the payload
-    access_token = oauth2.create_access_token(data={"user_id": user.id})
+    # Create a JWT token that includes the user's id, first_name, last_name and email in the payload
+    access_token = oauth2.create_access_token(data={"user_id": user.id, "first_name": user.first_name,
+                                                     "last_name": user.last_name, "user_email": user.email})
 
     # --- Return the generated token ---
     # The response includes the access token and the token type (bearer)
