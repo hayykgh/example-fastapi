@@ -21,6 +21,7 @@ jobs:
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
       ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
+      VUE_APP_API_HOST: ${{secrets.VUE_APP_API_HOST}}
 
     services:
       postgres:
