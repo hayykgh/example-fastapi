@@ -159,3 +159,4 @@ def update_post(
     db.commit()
 
     return post_query.first()
+
