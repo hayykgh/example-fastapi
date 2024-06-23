@@ -53,8 +53,6 @@ jobs:
       - name: install Python dependencies
         run: pip install -r requirements.txt
 
-      
-
       - name: test with pytest
         run: |
           pip install pytest
@@ -84,4 +82,4 @@ jobs:
           script: |
             cd FastAPI/src
             git pull
-            echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart API
+            echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
