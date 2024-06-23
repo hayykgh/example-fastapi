@@ -1,8 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from . import models
 from .routers import vote, post, user, auth
-from .database import engine
-from .config import settings
 from fastapi.middleware.cors import CORSMiddleware
 
 origins = ["*"]
