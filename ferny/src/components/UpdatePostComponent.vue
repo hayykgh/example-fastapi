@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axiosInstance from '../axios';
 import Notification from './NotificationComponent.vue';
 
 export default {
@@ -34,7 +34,7 @@ export default {
   methods: {
     async fetchPost(id) {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/posts/${id}`);
+        const response = await axiosInstance.get(`/posts/${id}`);
         this.post = response.data.Post;
       } catch (error) {
         console.error('Error fetching post:', error);
@@ -42,7 +42,7 @@ export default {
     },
     async updatePost() {
       try {
-        await axios.put(`http://127.0.0.1:8000/posts/${this.$route.params.id}`, this.post, {
+        await axiosInstance.put(`/posts/${this.$route.params.id}`, this.post, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },

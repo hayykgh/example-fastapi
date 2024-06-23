@@ -9,7 +9,7 @@
   </template>
   
   <script>
-  import axios from '../axios'; // Use the custom axios instance
+  import axiosInstance from '../axios'; // Use the custom axios instance
   
   export default {
     name: 'ProtectedResource',
@@ -20,7 +20,7 @@
     },
     async created() {
       try {
-        const response = await axios.get('/protected-resource');
+        const response = await axiosInstance.get('/protected-resource');
         this.message = response.data.message;
       } catch (err) {
         this.message = 'Error fetching protected resource';

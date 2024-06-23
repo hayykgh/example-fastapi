@@ -1,5 +1,6 @@
 from fastapi import Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
+from typing import List
 from .. import schemas, database, models, oauth2
 
 router = APIRouter(
@@ -49,3 +50,17 @@ def vote(id: int, db: Session = Depends(database.get_db), current_user: int = De
     total_likes = db.query(models.Vote).filter(models.Vote.post_id == id).count()
 
     return {"message": message, "likes": total_likes}
+
+
+@router.get("/", response_model=List[schemas.VoteUser])
+def vote(current_user: int = Depends(oauth2.get_current_user), db: Session = Depends(database.get_db)):
+    """
+    Retrieve liked posts by current user.
+    """
+    # Query the post ids liked by the current user
+    liked_posts = db.query(models.Vote.post_id).filter(models.Vote.user_id == current_user.id).all()
+
+    # Transform the result into the desired response format
+    liked_posts_list = [{"postid": post_id} for post_id, in liked_posts]
+
+    return liked_posts_list

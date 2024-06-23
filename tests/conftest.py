@@ -46,7 +46,9 @@ def client(session):
 def test_user(client):
     user_data = {
         "email": "ha1kgh@gmail.com",
-        "password": "Samura1!"
+        "password": "Samura1!",
+        "first_name": "Hayk",
+        "last_name": "Ghazaryan",
     }
 
 
@@ -58,7 +60,7 @@ def test_user(client):
 
 @pytest.fixture
 def token(test_user):
-    return create_access_token({"user_id": test_user["id"]})
+    return create_access_token({"user_id": test_user["id"], "first_name": test_user["first_name"], "last_name": test_user["last_name"],  "user_email": test_user["email"] })
 
 @pytest.fixture
 def authorized_client(client, token):

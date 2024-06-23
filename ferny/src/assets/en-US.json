@@ -1,0 +1,27 @@
+{
+  "success": {
+    "postCreated": "Post created successfully!",
+    "postDeleted": "Post deleted successfully!",
+    "postUpdated": "Post updated successfully!",
+    "userRegistered": "User registered successfully!",
+    "userUpdatedEmail": "Email updated successfully!",
+    "userUpdatedFirstName": "First Name updated successfully!",
+    "userUpdatedLastName": "Last Name updated successfully!",
+    "userUpdatedPassword": "Password updated successfully!",
+    "userDeleted": "Account deleted successfully!"
+  },
+  "error": {
+    "postCreationFailed": "Error creating post! Please try again later.",
+    "postDeletionFailed": "Error deleting post! Please try again later.",
+    "postUpdateFailed": "Error updating post! Please try again later.",
+    "userRegistrationFailed": "Error registering user! Please try again later.",
+    "userLoginFailed": "Login failed! Please check your credentials and try again.",
+    "userLogoutFailed": "Error logging out! Please try again later.",
+    "userUpdateFailed": "Error updating user! Please try again later.",
+    "userDeleteFailed": "Error deleting account! Please try again later.",
+    "loginRequired": "Login required to perform this action.",
+    "invalidCredentials": "Invalid credentials. Please check your username and password.",
+    "serverError": "Internal server error! Please try again later.",
+    "networkError": "Network error! Please check your internet connection."
+  }
+}

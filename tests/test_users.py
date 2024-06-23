@@ -10,7 +10,7 @@ import pytest
 
 def test_create_user(client):
     res = client.post(
-        "/users/", json={"email": "hayykgh3@gmail.com", "password": "Samura1!"})
+        "/users/", json={"email": "hayykgh3@gmail.com", "password": "Samura1!", "first_name": "Hayk", "last_name": "Ghazaryan"})
 
     new_user = schemas.UserResponse(**res.json())
     assert new_user.email == "hayykgh3@gmail.com"
@@ -41,5 +41,4 @@ def test_incorrect_login(client, email, password, status_code):
     res = client.post(
         "/login", data={"username": email, "password": password}
     )
-    
     assert res.status_code == status_code

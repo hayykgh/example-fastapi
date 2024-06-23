@@ -28,7 +28,7 @@
       });
   
       const redirectToLogin = () => {
-        window.location.href = '/login';
+        window.location.href = '/signin';
       };
   
       return {

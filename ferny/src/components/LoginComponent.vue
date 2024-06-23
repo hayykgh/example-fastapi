@@ -1,4 +1,3 @@
-<!-- src/components/LoginComponent.vue -->
 <template>
   <div class="login-container">
     <h2>Sign In</h2>
@@ -35,7 +34,7 @@
 </template>
 
 <script>
-import axios from '../axios'; // Assuming you have a custom axios instance
+import axiosInstance from '../axios'; // Import axiosInstance from src/axios.js
 
 export default {
   name: 'LoginComponent',
@@ -78,7 +77,7 @@ export default {
         formData.append('username', this.email);
         formData.append('password', this.password);
 
-        const response = await axios.post('/login', formData, {
+        const response = await axiosInstance.post('/login', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }

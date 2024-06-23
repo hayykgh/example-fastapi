@@ -2,9 +2,10 @@
 
 import axios from 'axios';
 import eventBus from './eventBus'; // Import the event bus
+const apiHost = process.env.VUE_APP_API_HOST;
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: apiHost,
   headers: {
     'Content-Type': 'application/json'
   }

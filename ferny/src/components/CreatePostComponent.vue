@@ -1,9 +1,7 @@
 <template>
   <div class="create-post">
-    <!-- Keep this comment: This is the create post section -->
     <h2>Create Post</h2>
     <form @submit.prevent="createPost">
-      <!-- Keep this comment: Form for creating a new post -->
       <div class="form-group">
         <label for="title" class="label">Title:</label>
         <input v-model="form.title" type="text" id="title" class="form-control" required />
@@ -19,7 +17,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axiosInstance from '../axios'; // Import axiosInstance from src/axios.js
 import Notification from './NotificationComponent.vue';
 
 export default {
@@ -29,38 +27,25 @@ export default {
         title: '',
         content: ''
       },
-      notificationMessage: '', // Notification message for success or error
-      notificationType: 'success' // Default notification type is success
+      notificationMessage: '',
+      notificationType: 'success'
     };
   },
   methods: {
     async createPost() {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('No token available');
-        }
-
-        await axios.post('http://127.0.0.1:8000/posts', this.form, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        await axiosInstance.post('/posts', this.form);
 
         this.form.title = '';
         this.form.content = '';
 
-        // Set success notification message
         this.notificationMessage = 'Post created successfully!';
         this.notificationType = 'success';
 
-        // Emit an event to notify the parent component (if needed)
         this.$emit('postCreated');
-
       } catch (error) {
         console.error('Error creating post:', error);
 
-        // Set error notification message
         this.notificationMessage = 'Error creating post!';
         this.notificationType = 'error';
       }
@@ -72,25 +57,25 @@ export default {
 };
 </script>
 
+
 <style scoped>
-/* Integrate Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 .create-post {
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
-  background-color: #ebeced; /* Background color */
+  background-color: #ebeced;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-family: 'Montserrat', sans-serif; /* Apply Montserrat font */
+  font-family: 'Montserrat', sans-serif;
 }
 
 h2 {
   text-align: center;
-  color: #1a202c; /* Dark text color */
+  color: #1a202c;
   margin-bottom: 20px;
-  font-family: 'Montserrat', sans-serif; /* Apply Montserrat font */
+  font-family: 'Montserrat', sans-serif;
 }
 
 .form-group {
@@ -99,23 +84,23 @@ h2 {
 
 .label {
   font-weight: bold;
-  color: #2d3748; /* Darker text color */
+  color: #2d3748;
   display: block;
   margin-bottom: 5px;
-  font-family: 'Montserrat', sans-serif; /* Apply Montserrat font */
+  font-family: 'Montserrat', sans-serif;
 }
 
 .form-control {
-  width: calc(100% - 22px); /* Adjust based on your padding and border */
+  width: calc(100% - 22px);
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #cbd5e0; /* Light border color */
-  font-family: 'Montserrat', sans-serif; /* Apply Montserrat font */
-  color: #2d3748; /* Darker text color */
+  border: 1px solid #cbd5e0;
+  font-family: 'Montserrat', sans-serif;
+  color: #2d3748;
 }
 
 textarea.form-control {
-  resize: vertical; /* Allow vertical resizing only */
+  resize: vertical;
   min-height: 50px;
   max-height: 300px;
   overflow-y: auto;
@@ -123,21 +108,27 @@ textarea.form-control {
 
 /* Custom scrollbar styles */
 textarea.form-control::-webkit-scrollbar {
-  width: 6px; /* Width of the scrollbar */
+  width: 6px;
 }
 
 textarea.form-control::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Background of the scrollbar track */
+  background: #f1f1f1;
   border-radius: 10px;
 }
 
 textarea.form-control::-webkit-scrollbar-thumb {
-  background: rgb(14, 100, 75); /* Scrollbar thumb color */
+  background: rgb(14, 100, 75);
   border-radius: 10px;
 }
 
 textarea.form-control::-webkit-scrollbar-thumb:hover {
-  background: rgb(91, 159, 143); /* Scrollbar thumb hover color */
+  background: rgb(91, 159, 143);
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: rgb(14, 100, 75);
 }
 
 .btn {
@@ -148,21 +139,16 @@ textarea.form-control::-webkit-scrollbar-thumb:hover {
   text-align: center;
   text-decoration: none;
   border: none;
-  background-color: rgb(14, 100, 75); /* Button background color */
-  color: #fff; /* Button text color */
+  background-color: rgb(14, 100, 75);
+  color: #fff;
   cursor: pointer;
   border-radius: 20px;
   transition: background-color 0.3s ease;
   font-family: 'Montserrat', sans-serif;
 }
 
-input:focus {
-  outline: none;
-  border-color: rgb(14, 100, 75);
-}
-
 .btn:hover {
-  background-color: rgb(91, 159, 143); /* Button background color on hover */
+  background-color: rgb(91, 159, 143);
   color: rgb(20, 33, 39);
 }
 </style>

@@ -1,7 +1,7 @@
 from fastapi import Response, status, HTTPException, Depends, APIRouter
 from typing import List, Optional
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, desc
 from .. import models, schemas, oauth2
 from ..database import get_db
 
@@ -32,11 +32,12 @@ def get_posts(
     """
     # Query posts with votes count
     posts = db.query(models.Post, func.count(models.Vote.post_id).label("votes")) \
-              .outerjoin(models.Vote, models.Vote.post_id == models.Post.id) \
-              .group_by(models.Post.id) \
-              .filter(models.Post.title.contains(search)) \
-              .order_by(models.Post.id) \
-              .offset(skip).limit(limit).all()
+          .outerjoin(models.Vote, models.Vote.post_id == models.Post.id) \
+          .group_by(models.Post.id) \
+          .filter(models.Post.title.contains(search)) \
+          .order_by(desc(models.Post.id), desc("votes")) \
+          .offset(skip).limit(limit).all()
+
 
     return posts
 

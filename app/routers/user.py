@@ -80,10 +80,6 @@ def get_user(id: int,
     db.commit()
 
     return Response(status_code=status.HTTP_204_NO_CONTENT)
-    
-
-
-
 
 
 # UPDATE USER
