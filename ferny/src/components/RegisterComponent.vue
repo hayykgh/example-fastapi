@@ -115,7 +115,7 @@ export default {
     async registerUser() {
       if (this.isValidForm) {
         try {
-          const response = await axiosInstance.post('/users', {
+          const response = await axiosInstance.post('/users/', {
             email: this.form.email,
             password: this.form.password,
             first_name: this.form.first_name,

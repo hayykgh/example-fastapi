@@ -34,7 +34,7 @@ export default {
   methods: {
     async createPost() {
       try {
-        await axiosInstance.post('/posts', this.form);
+        await axiosInstance.post('/posts/', this.form);
 
         this.form.title = '';
         this.form.content = '';

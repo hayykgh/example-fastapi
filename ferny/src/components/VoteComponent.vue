@@ -33,7 +33,7 @@ export default {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await axiosInstance.get('/vote', {
+          const response = await axiosInstance.get('/vote/', {
             headers: {
               Authorization: `Bearer ${token}`
             }

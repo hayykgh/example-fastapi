@@ -61,7 +61,7 @@ export default {
   methods: {
     async fetchPosts() {
       try {
-        const response = await axiosInstance.get('/posts');
+        const response = await axiosInstance.get('/posts/');
         this.posts = response.data.map(post => ({
           ...post,
           showDropdown: false
