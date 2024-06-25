@@ -84,8 +84,6 @@ jobs:
 
             cd FastAPI/src
             git pull
-            pip install -r requirements.txt
-
             alembic upgrade head
 
             echo ${{ secrets.PROD_PASSWORD }} | sudo -S systemctl restart api
