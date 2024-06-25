@@ -80,6 +80,17 @@ jobs:
           username: ${{secrets.PROD_USERNAME}}
           password: ${{secrets.PROD_PASSWORD}}
           script: |
+            source FastAPI/FastAPI_venv/bin/activate
+
             cd FastAPI/src
             git pull
-            echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
+            pip install -r requirements.txt
+
+            alembic upgrade head
+
+            echo ${{ secrets.PROD_PASSWORD }} | sudo -S systemctl restart api
+
+
+            echo ${{ secrets.PROD_PASSWORD }} | sudo -S systemctl restart fe-build
+
+            deactivate
