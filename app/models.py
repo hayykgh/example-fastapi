@@ -37,9 +37,4 @@ class Vote(Base):
     post_id = Column(Integer, ForeignKey("posts.id", ondelete="CASCADE"), primary_key=True)
 
 
-class Comment(Base):
-    __tablename__ = "comments"
-    
-    id = Column(Integer, primary_key=True, nullable=False)
-    email = Column(String, nullable=False, unique=True)
 
