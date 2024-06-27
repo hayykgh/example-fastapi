@@ -36,8 +36,7 @@ def get_posts(
           .group_by(models.Post.id) \
           .filter(models.Post.title.contains(search)) \
           .order_by(desc(models.Post.id), desc("votes")) \
-          .offset(skip).limit(limit).all()
-
+          .offset(skip).limit(limit).all()    
 
     return posts
 
