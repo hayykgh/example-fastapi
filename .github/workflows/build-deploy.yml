@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build: 
+  build:
     environment:
       name: Testing
     env:
@@ -65,7 +65,7 @@ jobs:
 
       - name: Install Node.js dependencies
         run: npm install  # This installs all dependencies listed in package.json
-      
+
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
@@ -79,9 +79,19 @@ jobs:
           host: ${{secrets.PROD_HOST}}
           username: ${{secrets.PROD_USERNAME}}
           password: ${{secrets.PROD_PASSWORD}}
+          envs: |
+            DATABASE_HOSTNAME=${{secrets.DATABASE_HOSTNAME}}
+            DATABASE_PORT=${{secrets.DATABASE_PORT}}
+            DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}}
+            DATABASE_NAME=${{secrets.DATABASE_NAME}}
+            DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}
+            SECRET_KEY=${{secrets.SECRET_KEY}}
+            ALGORITHM=${{secrets.ALGORITHM}}
+            ACCESS_TOKEN_EXPIRE_MINUTES=${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
+            VUE_APP_API_HOST=${{secrets.VUE_APP_API_HOST}}
+            SUDO_PASSWORD=${{secrets.SUDO_PASSWORD}}
           script: |
-
-            source FastAPI/FastAPI_venv/bin/activate
+            source /home/your_user/FastAPI/FastAPI_venv/bin/activate
 
             # Change to the project directory
             cd /home/your_user/FastAPI/src
@@ -103,6 +113,13 @@ jobs:
             echo "Access Token Expire Minutes: $ACCESS_TOKEN_EXPIRE_MINUTES"
             echo "Vue App API Host: $VUE_APP_API_HOST"
 
+            # Check for alembic.ini
+            if [ ! -f alembic.ini ]; then
+              echo "FAILED: No config file 'alembic.ini' found, or file has no '[alembic]' section"
+              deactivate
+              exit 1
+            fi
+
             # Run Alembic upgrade
             alembic upgrade head
 
@@ -115,10 +132,10 @@ jobs:
 
             # Restart services
             echo "Restarting API service"
-            echo "your_sudo_password" | sudo -S systemctl restart api
+            echo "$SUDO_PASSWORD" | sudo -S systemctl restart api
 
             echo "Restarting Frontend Build service"
-            echo "your_sudo_password" | sudo -S systemctl restart fe-build
+            echo "$SUDO_PASSWORD" | sudo -S systemctl restart fe-build
 
             # Deactivate the virtual environment
             deactivate
