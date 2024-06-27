@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  build: 
     environment:
       name: Testing
     env:
@@ -65,7 +65,7 @@ jobs:
 
       - name: Install Node.js dependencies
         run: npm install  # This installs all dependencies listed in package.json
-
+      
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
@@ -91,53 +91,15 @@ jobs:
             VUE_APP_API_HOST=${{secrets.VUE_APP_API_HOST}}
             SUDO_PASSWORD=${{secrets.SUDO_PASSWORD}}
           script: |
-            source /home/your_user/FastAPI/FastAPI_venv/bin/activate
+            source FastAPI/FastAPI_venv/bin/activate
 
-            # Change to the project directory
-            cd /home/your_user/FastAPI/src
-
-            # Print current directory
-            echo "Current directory: $(pwd)"
-
-            # Pull the latest changes from git
+            cd FastAPI/src
             git pull
-
-            # Print environment variables
-            echo "Database Hostname: $DATABASE_HOSTNAME"
-            echo "Database Port: $DATABASE_PORT"
-            echo "Database Password: $DATABASE_PASSWORD"
-            echo "Database Name: $DATABASE_NAME"
-            echo "Database Username: $DATABASE_USERNAME"
-            echo "Secret Key: $SECRET_KEY"
-            echo "Algorithm: $ALGORITHM"
-            echo "Access Token Expire Minutes: $ACCESS_TOKEN_EXPIRE_MINUTES"
-            echo "Vue App API Host: $VUE_APP_API_HOST"
-
-            # Check for alembic.ini
-            if [ ! -f alembic.ini ]; then
-              echo "FAILED: No config file 'alembic.ini' found, or file has no '[alembic]' section"
-              deactivate
-              exit 1
-            fi
-
-            # Run Alembic upgrade
             alembic upgrade head
 
-            # Check the exit status of Alembic command
-            if [ $? -ne 0 ]; then
-              echo "Alembic upgrade failed"
-              deactivate
-              exit 1
-            fi
+            echo ${{ secrets.PROD_PASSWORD }} | sudo -S systemctl restart api
 
-            # Restart services
-            echo "Restarting API service"
-            echo "$SUDO_PASSWORD" | sudo -S systemctl restart api
+            echo ${{ secrets.PROD_PASSWORD }} | sudo -S systemctl restart fe-build
 
-            echo "Restarting Frontend Build service"
-            echo "$SUDO_PASSWORD" | sudo -S systemctl restart fe-build
-
-            # Deactivate the virtual environment
             deactivate
 
-            echo "Script executed successfully"
