@@ -16,7 +16,7 @@
       <div v-if="isOwner(post.Post.owner.id)" class="dropdown">
         <button class="dropbtn" @click="toggleDropdown(index)">...</button>
         <div class="dropdown-content" v-if="post.showDropdown">
-          <a @click="updatePost(post.Post.id)">Update</a>
+          <a @click="updatePost(post.Post.id)">Update Post</a>
           <a @click="deletePost(post.Post.id)">Delete</a>
         </div>
       </div>
