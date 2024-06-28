@@ -98,6 +98,7 @@ jobs:
 
             echo ${{ secrets.PROD_PASSWORD }} | sudo -S systemctl restart api
 
-            echo ${{ secrets.PROD_PASSWORD }} | sudo -S systemctl restart fe-build
+            cd FastAPI/src/ferny/dist
+            npm run build
 
             deactivate
