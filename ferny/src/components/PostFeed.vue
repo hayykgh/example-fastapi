@@ -38,6 +38,7 @@
   </div>
 </template>
 
+
 <script>
 import axiosInstance from '../axios';
 import CreatePostComponent from './CreatePostComponent.vue';
