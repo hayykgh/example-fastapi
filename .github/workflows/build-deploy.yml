@@ -97,8 +97,9 @@ jobs:
             alembic upgrade head
 
             echo ${{ secrets.PROD_PASSWORD }} | sudo -S systemctl restart api
-
+            deactivate
+            cd
             cd FastAPI/src/ferny/dist
             npm run build
 
-            deactivate
+            
