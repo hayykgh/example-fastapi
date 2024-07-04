@@ -15,7 +15,7 @@ router = APIRouter(
 def get_posts(
     db: Session = Depends(get_db),                # Dependency injection for database session
     skip: int = 0,                                # Number of records to skip
-    limit: int = 10,                              # Maximum number of records to return
+    limit: int = 50,                              # Maximum number of records to return
     search: Optional[str] = ""                    # Search query for filtering posts by title
 ):
     """
