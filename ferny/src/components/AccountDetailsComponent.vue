@@ -169,7 +169,7 @@ export default {
       }
     },
     async saveEmailChanges() {
-      await this.saveFieldChanges('user_email', this.newEmail, 'userUpdatedEmail');
+      await this.saveFieldChanges('email', this.newEmail, 'userUpdatedEmail');
     },
     async saveFirstNameChanges() {
       await this.saveFieldChanges('first_name', this.newFirstName, 'userUpdatedFirstName');
