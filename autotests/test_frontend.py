@@ -42,7 +42,7 @@ async def login(page, email, password):
 @pytest.mark.asyncio
 async def test_creating_account():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context()
         page = await context.new_page()
 
@@ -87,7 +87,7 @@ async def test_creating_account():
 async def test_login():
     async with async_playwright() as p:
 
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context()
         page = await context.new_page()
 
@@ -126,7 +126,7 @@ async def test_login():
 @pytest.mark.asyncio
 async def test_create_post():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context()
         page = await context.new_page()
 
@@ -164,7 +164,7 @@ async def test_create_post():
 @pytest.mark.asyncio
 async def test_like_post():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context()
         page = await context.new_page()
 
@@ -197,7 +197,7 @@ async def test_like_post():
 @pytest.mark.asyncio
 async def test_update_post():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context()
         page = await context.new_page()
 
@@ -254,7 +254,7 @@ async def test_update_post():
 @pytest.mark.asyncio
 async def test_delete_post():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context()
         page = await context.new_page()
 
@@ -293,7 +293,7 @@ async def test_delete_post():
 @pytest.mark.asyncio
 async def test_update_account():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context()
         page = await context.new_page()
 
@@ -387,7 +387,7 @@ async def test_update_account():
 @pytest.mark.asyncio
 async def test_delete_account():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context()
         page = await context.new_page()
 
