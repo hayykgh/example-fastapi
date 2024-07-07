@@ -300,6 +300,7 @@ async def test_update_account():
         await login(page, curr_email, password)
 
         # Clicks on the Account Name
+        await page.wait_for_timeout(1000)
         xpath = "/html/body/div/div/header/nav/div[2]/a"
         element = page.locator(f'xpath={xpath}')
         await element.click()
@@ -394,6 +395,7 @@ async def test_delete_account():
         await login(page, f"updated+{curr_email}", f"{password}U")
 
          # Clicks on the Account Name
+        await page.wait_for_timeout(1000)
         xpath = "/html/body/div/div/header/nav/div[2]/a"
         element = page.locator(f'xpath={xpath}')
         await element.click()
