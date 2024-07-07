@@ -2,4 +2,3 @@ __pycache__
 FastAPI_venv/
 .env
 node_modules
-autotests

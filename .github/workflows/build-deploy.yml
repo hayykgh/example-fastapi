@@ -56,7 +56,7 @@ jobs:
       - name: test with pytest
         run: |
           pip install pytest
-          pytest
+          pytest tests
 
       - name: Install Node.js and npm
         uses: actions/setup-node@v2
@@ -97,7 +97,7 @@ jobs:
             alembic upgrade head
 
             echo ${{ secrets.PROD_PASSWORD }} | sudo -S systemctl restart api
-            
+
             deactivate
             cd
             cd FastAPI/src/ferny/dist
