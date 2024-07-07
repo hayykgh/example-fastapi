@@ -49,7 +49,6 @@ async def test_login_with_incorrect_email():
         form_data.add_field('username', f"in{curr_email}")
         form_data.add_field('password', password)
 
-
         async with session.post(login_url, data=form_data) as response:
             
             response_json = await response.json()
