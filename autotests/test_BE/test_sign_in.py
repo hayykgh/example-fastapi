@@ -10,7 +10,7 @@ BASE_URL = "https://api.ferny.xyz"
 async def test_login():
     async with aiohttp.ClientSession() as session:
 
-        login_url = f"{BASE_URL}/login11/"
+        login_url = f"{BASE_URL}/login1/"
         form_data = aiohttp.FormData()
         form_data.add_field('username', curr_email)
         form_data.add_field('password', password)
