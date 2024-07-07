@@ -293,14 +293,14 @@ async def test_delete_post():
 @pytest.mark.asyncio
 async def test_update_account():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
+        browser = await p.chromium.launch(headless=False)
         context = await browser.new_context()
         page = await context.new_page()
 
         await login(page, curr_email, password)
 
         # Clicks on the Account Name
-        await page.wait_for_timeout(2000)
+        await page.wait_for_timeout(1000)
         xpath = "/html/body/div/div/header/nav/div[2]/a"
         element = page.locator(f'xpath={xpath}')
         await element.click()
@@ -371,7 +371,8 @@ async def test_update_account():
         xpath = "/html/body/div/div/div/div/div[4]/button/img"
         element = page.locator(f'xpath={xpath}')
         await element.click()
-
+        
+        await page.wait_for_timeout(1000)
 
         # Clicks on the Sign Out button
         xpath = "/html/body/div/div/header/nav/div[2]/button"
@@ -381,9 +382,10 @@ async def test_update_account():
         await login(page, f"updated+{curr_email}", f"{password}U")
 
         # Checks if the first and last name are displayed in the header after the sign in
+        await page.wait_for_timeout(1000)
         xpath = "/html/body/div/div/header/nav/div[2]/a"
         element = page.locator(f'xpath={xpath}')
-        await expect(element).to_have_text(f"updated+{first_name} updated+{last_name}") 
+        await expect(element).to_have_text(f"updated+{first_name} updated+{last_name}")
 
 @pytest.mark.asyncio
 async def test_delete_account():
